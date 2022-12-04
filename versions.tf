@@ -2,9 +2,7 @@ terraform {
   required_providers {
     kubectl = {
       source = "gavinbunney/kubectl"
-    }
-    httpclient = {
-      source = "dmachard/http-client"
+      version = ">= 1.14.0"
     }
   }
 }
