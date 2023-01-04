@@ -1,7 +1,14 @@
-data "httpclient_request" "this" {
-  url = var.url
+resource "null_resource" "manifest_file" {
+  triggers = {
+    filename = var.filename
+    url = var.url
+  }
+  provisioner "local-exec" {
+    command = "curl --create-dirs -Lso ${var.filename} ${var.url}"
+  }
 }
 
+
 data "kubectl_file_documents" "this" {
-  content = data.httpclient_request.this.response_body
+  content = file(null_resource.manifest_file.triggers.filename)
 }
